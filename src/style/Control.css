@@ -1,0 +1,71 @@
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #343a40;
+    padding: 10px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #f8f9fa;
+    z-index: 1000;
+    font-family: sans-serif;
+}
+
+.top-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.algorithmButton,
+.currentAlgorithmButton {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #495057;
+    transition: background-color 0.3s, color 0.3s;
+    color: #f8f9fa;
+}
+
+.algorithmButton:hover {
+    background-color: #6c757d;
+}
+
+.currentAlgorithmButton {
+    background-color: #6f42c1;
+    color: #f8f9fa;
+}
+
+input[type="range"] {
+    width: 200px;
+    margin: 0 20px;
+    accent-color: #6f42c1;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: #6c757d;
+}
+
+span {
+    margin-left: 20px;
+    font-weight: bold;
+}
