@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import '../style/SortingVisualizer.css';
 import { useSorting } from './useSorting';
 import Controls from './Control';
@@ -14,6 +14,7 @@ const SortingVisualizer = () => {
     algorithm,
     currentStep,
     sortedIndices,
+    speed,
     
     startSorting,
     pauseSorting,
@@ -22,28 +23,34 @@ const SortingVisualizer = () => {
     setSpeed,
     nextStep,
     previousStep,
-    
-
   } = useSorting();
 
-
   const handleStartPause = () => {
-
     if (paused) {
       startSorting();
     } else {
       pauseSorting();
     }
-    
   };
-   // Calculate the width of each bar based on the array size
-  const barWidth = Math.max(2, 100 / array.length - 1); 
-  // console.log("Current step:", currentStep);
+
+  // Memoize the bar width calculation
+  const barWidth = useMemo(() => Math.max(2, 100 / array.length - 1), [array.length]);
   const color = barWidth > 5 ? "white" : "transparent";
 
+  // Memoize the className calculation
+  const getBarClassName = (idx) => {
+    let className = 'array-bar';
+    if (sortedIndices.includes(idx)) {
+      className += ' sorted';
+    } else if (currentStep && currentStep.type === 'compare' && currentStep.indices.includes(idx)) {
+      className += ' comparing';
+    } else if (currentStep && currentStep.type === 'swap' && currentStep.indices.includes(idx)) {
+      className += ' swapping';
+    }
+    return className;
+  };
 
   return (
-
     <div className="sorting-visualizer">
       <Controls
         sorting={sorting}
@@ -52,46 +59,33 @@ const SortingVisualizer = () => {
         currentStepIndex={currentStepIndex}
         stepCount={stepCount}
         algorithm={algorithm}
+        speed={speed}
 
         onStart={handleStartPause}
-        onReset={() => resetArray(10)} 
-        onAlgorithmChange={(algo) => setAlgorithm(algo)}
-        onSpeedChange={(speed) => setSpeed(500-speed)}
+        onReset={() => resetArray(array.length)}
+        onAlgorithmChange={setAlgorithm}
+        onSpeedChange={(newSpeed) => setSpeed(500 - newSpeed)}
         onNextStep={nextStep}
         onPreviousStep={previousStep}
-        onSizeChange={(size) => resetArray(size)  }
-
-
-        
+        onSizeChange={(size) => resetArray(parseInt(size, 10))}
       />
       <div className="array-container">
-        {array.map((value, idx) => {
-          let className = 'array-bar';
-          if (sortedIndices && sortedIndices.includes(idx)) {
-            className += ' sorted';
-          } else if (currentStep && currentStep.type === 'compare' && currentStep.indices.includes(idx)) {
-            className += ' comparing';
-          } else if (currentStep && currentStep.type === 'swap' && currentStep.indices.includes(idx)) {
-            className += ' swapping';
-          }
-          return (
-            <div
-              key={idx}
-              className={className}
-              style={{ height: `${value}px` , width: `${barWidth}%`, color: color}}
-            >
+        {array.map((value, idx) => (
+          <div
+            key={idx}
+            className={getBarClassName(idx)}
+            style={{ 
+              height: `${value}px`,
+              width: `${barWidth}%`,
+              color: color
+            }}
+          >
             {value}
-            </div>
-            
-          );
-        })}
-
-
-
-
+          </div>
+        ))}
       </div>
     </div>
   );
 };
 
-export default SortingVisualizer;
+export default React.memo(SortingVisualizer);

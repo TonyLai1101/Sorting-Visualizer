@@ -1,123 +1,158 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useReducer, useEffect, useRef, useCallback } from 'react';
 import * as algorithms from '../algorithms';
-import {generateRandomArray} from '../helper/generateArray.js'
+import { generateRandomArray } from '../helper/generateArray.js';
+
+// Action types
+const SET_ARRAY = 'SET_ARRAY';
+const SET_SORTING = 'SET_SORTING';
+const SET_COMPLETED = 'SET_COMPLETED';
+const SET_ALGORITHM = 'SET_ALGORITHM';
+const SET_SPEED = 'SET_SPEED';
+const SET_STEPS = 'SET_STEPS';
+const SET_CURRENT_STEP_INDEX = 'SET_CURRENT_STEP_INDEX';
+const SET_PAUSED = 'SET_PAUSED';
+const SET_SORTED_INDICES = 'SET_SORTED_INDICES';
+
+// Reducer function
+function sortingReducer(state, action) {
+  switch (action.type) {
+    case SET_ARRAY:
+      return { ...state, array: action.payload };
+    case SET_SORTING:
+      return { ...state, sorting: action.payload };
+    case SET_COMPLETED:
+      return { ...state, completed: action.payload };
+    case SET_ALGORITHM:
+      return { ...state, algorithm: action.payload };
+    case SET_SPEED:
+      return { ...state, speed: action.payload };
+    case SET_STEPS:
+      return { ...state, steps: action.payload };
+    case SET_CURRENT_STEP_INDEX:
+      return { ...state, currentStepIndex: action.payload };
+    case SET_PAUSED:
+      return { ...state, paused: action.payload };
+    case SET_SORTED_INDICES:
+      return { ...state, sortedIndices: action.payload };
+    default:
+      return state;
+  }
+}
 
 export function useSorting(initialSize = 10) {
+  const [state, dispatch] = useReducer(sortingReducer, initialSize, (size) => ({
+  test: 0,
+  array:[],
+  sorting: false,
+  completed: false,
+  algorithm: 'bubbleSort',
+  speed: 50,
+  steps: [],
+  currentStepIndex: 0,
+  paused: true,
+  sortedIndices: [],
+}));
 
-    
-    const [array, setArray] = useState(generateRandomArray(initialSize));
-    const [sorting, setSorting] = useState(false);
-    const [completed, setCompleted] = useState(false);
-    const [algorithm, setAlgorithm] = useState('bubbleSort');
-    const [speed, setSpeed] = useState(50);
-    const [steps, setSteps] = useState([]);
-    const [currentStepIndex, setCurrentStepIndex] = useState(-1);
-    const [paused, setPaused] = useState(true);
-    const [sortedIndices, setSortedIndices] = useState([]);
-    const timeoutRef = useRef(null);
+  const timeoutRef = useRef(null);
 
-    const generateSteps = useCallback(() => {                           
-        console.log("generateSteps function is called");
-        const newSteps = algorithms[algorithm](array.slice());
-        return [{ array: array.slice(), type: 'initial' }, ...newSteps];
-    }, [algorithm]);
+  const generateSteps = useCallback((array) => {
+    console.log("generateSteps function is called");
+    console.log("generateSteps:",array);
 
-   
+    const newSteps = algorithms[state.algorithm](array.slice());
+    return [{ array: array.slice(), type: 'initial' }, ...newSteps];
+  }, [state.algorithm, state.array]);
 
-        useEffect(() => {
-        console.log("Running useEffect generateSteps")
-        const newSteps = generateSteps();
-        setSteps(newSteps);
-        setCurrentStepIndex(0);
-        setCompleted(false);
-        setSortedIndices([]);
-    }, [algorithm, array]);;
+//   useEffect(() => {
+//     console.log("Running useEffect generateSteps");
+//     resetArray();
+//   },[]);
 
+  const nextStep = useCallback(() => {
+    console.log("Running nextStep");
+    if (state.currentStepIndex < state.steps.length - 1) {
+      const nextIndex = state.currentStepIndex + 1;
+      const step = state.steps[nextIndex];
+      dispatch({ type: SET_CURRENT_STEP_INDEX, payload: nextIndex });
+      dispatch({ type: SET_ARRAY, payload: step.array });
+      if (step.type === 'sorted') {
+        dispatch({ type: SET_SORTED_INDICES, payload: [...state.sortedIndices, ...step.indices] });
+      }
+    } else {
+      dispatch({ type: SET_COMPLETED, payload: true });
+    }
+  }, [state.currentStepIndex, state.steps, state.sortedIndices]);
 
+  const previousStep = useCallback(() => {
+    console.log("Running previousStep");
 
-    const nextStep = useCallback(() => {
-        console.log("Running nextStep")
+    if (state.currentStepIndex > 0) {
+      dispatch({ type: SET_CURRENT_STEP_INDEX, payload: state.currentStepIndex - 1 });
+      dispatch({ type: SET_ARRAY, payload: state.steps[state.currentStepIndex - 1].array });
+    }
+  }, [state.currentStepIndex, state.steps]);
 
-        if (currentStepIndex < steps.length - 1) {
-            const nextIndex = currentStepIndex + 1;
-            const step = steps[nextIndex];
-            setCurrentStepIndex(nextIndex);
-            setArray(step.array);
-            if (step.type === 'sorted') {
-                setSortedIndices((prev) => [...prev, ...step.indices]);
-            }
-        } else {
-            setCompleted(true);
-        }
-    }, [currentStepIndex, steps]);
+  const startSorting = useCallback(() => {
+    console.log("Running startSorting");
 
+    dispatch({ type: SET_SORTING, payload: true });
+    dispatch({ type: SET_PAUSED, payload: false });
+  }, []);
 
+  const pauseSorting = useCallback(() => {
+    console.log("Running pauseSorting");
 
-    const previousStep = useCallback(() => {
-        if (currentStepIndex > 0) {
-            setCurrentStepIndex(currentStepIndex - 1);
-            setArray(steps[currentStepIndex - 1].array);
-        }
-    }, [currentStepIndex, steps]);
-
-    const startSorting = useCallback(() => {
-        setSorting(true);
-        setPaused(false);
-    }, []);
-
-    const pauseSorting = useCallback(() => {
-        setPaused(true);
-        clearTimeout(timeoutRef.current);
-    }, []);
-
-    useEffect(() => {
-        console.log("Running useEffect 1")
-
-        if (!paused && sorting && currentStepIndex < steps.length - 1) {
-            timeoutRef.current = setTimeout(() => {
-                nextStep();
-            }, speed);
-        }
-    }, [paused, sorting, currentStepIndex, steps, speed, nextStep]);
-
-
-
-    
-
-    
+    dispatch({ type: SET_PAUSED, payload: true });
+    clearTimeout(timeoutRef.current);
+  }, []);
 
   const resetArray = useCallback((size = initialSize) => {
+    console.log("Running resetArray");
+
     const newArray = generateRandomArray(size);
-    setArray(newArray);
-    setSteps([]);
-    setCurrentStepIndex(-1);
-    setCompleted(false);
-    setSortedIndices([]);
-    setPaused(true);
-    setSorting(false);
-    // This will trigger the useEffect to regenerate steps
-  }, [initialSize]);
-    
 
-    
+    const newSteps = generateSteps(newArray);
 
-    return {
-        array,
-        sorting,
-        paused,
-        completed,
-        algorithm,
-        speed,
-        currentStep: steps[currentStepIndex],
-        stepCount: steps.length,
-        currentStepIndex,
-        startSorting,
-        pauseSorting,
-        resetArray,
-        setAlgorithm,
-        setSpeed,
-        nextStep,
-        previousStep,
-        sortedIndices,
-    };
-}       
+    dispatch({ type: SET_ARRAY, payload: newArray });
+    dispatch({ type: SET_STEPS, payload: newSteps });
+    dispatch({ type: SET_CURRENT_STEP_INDEX, payload: 0 });
+    dispatch({ type: SET_COMPLETED, payload: false });
+    dispatch({ type: SET_SORTED_INDICES, payload: [] });
+    dispatch({ type: SET_PAUSED, payload: true });
+    dispatch({ type: SET_SORTING, payload: false });
+  }, []);
+
+
+  useEffect(() => {
+    resetArray();
+  },[state.algorithm]);
+
+
+
+
+    useEffect(() => {
+    console.log("Running useEffect for sorting steps");
+    if (!state.paused && state.sorting && state.currentStepIndex < state.steps.length - 1) {
+      timeoutRef.current = setTimeout(() => {
+        nextStep();
+      }, state.speed);
+    }
+    return () => clearTimeout(timeoutRef.current);
+  }, [state.paused, state.sorting, state.currentStepIndex]);
+
+  
+
+
+  return {
+    ...state,
+    currentStep: state.steps[state.currentStepIndex],
+    stepCount: state.steps.length,
+    startSorting,
+    pauseSorting,
+    resetArray,
+    setAlgorithm: (algo) => dispatch({ type: SET_ALGORITHM, payload: algo }),
+    setSpeed: (speed) => dispatch({ type: SET_SPEED, payload: speed }),
+    nextStep,
+    previousStep,
+  };
+}

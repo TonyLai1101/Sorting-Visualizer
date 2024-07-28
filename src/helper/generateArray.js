@@ -1,9 +1,10 @@
-export const generateRandomArray = (size) => {
+export function generateRandomArray (size) {
   console.log("Running generateRandomArray Func")
   const array = [];
   for (let i = 0; i < size; i++) {
-    array.push(randomIntFromInterval(100, 500));
+    array.push(randomIntFromInterval(100, 300));
   }
+  console.log(array)
   return array;
 };
 
