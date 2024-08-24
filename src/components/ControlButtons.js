@@ -10,9 +10,13 @@ const ControlButtons = ({
     completed,
     currentStepIndex,
     stepCount,
+    generateNewArrayButton,
 }) => (
     <div className="control-buttons">
-        <button onClick={onReset} disabled={sorting && !paused}>Generate New Array</button>
+        <button onClick={generateNewArrayButton} disabled={sorting && !paused}>Generate New Array</button>
+
+        <button onClick={onReset} disabled={sorting && !paused}>Reset</button>
+
         <button onClick={onStart}>
             {paused ? 'Start' : 'Pause'}
         </button>

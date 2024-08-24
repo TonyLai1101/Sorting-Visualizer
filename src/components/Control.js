@@ -17,6 +17,7 @@ const Controls = ({
     stepCount,
     algorithm,
     onSizeChange,
+    generateNewArrayButton,
 }) => (
     <div className="controls">
         <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} />
@@ -47,6 +48,7 @@ const Controls = ({
             completed={completed}
             currentStepIndex={currentStepIndex}
             stepCount={stepCount}
+            generateNewArrayButton={generateNewArrayButton}
         />
     </div>
 );

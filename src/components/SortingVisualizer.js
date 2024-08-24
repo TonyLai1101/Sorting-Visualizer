@@ -23,6 +23,7 @@ const SortingVisualizer = () => {
     setSpeed,
     nextStep,
     previousStep,
+    generateNewArray,
   } = useSorting();
 
   const handleStartPause = () => {
@@ -62,12 +63,13 @@ const SortingVisualizer = () => {
         speed={speed}
 
         onStart={handleStartPause}
-        onReset={() => resetArray(array.length)}
+        onReset={() => resetArray(algorithm)}
         onAlgorithmChange={setAlgorithm}
         onSpeedChange={(newSpeed) => setSpeed(500 - newSpeed)}
         onNextStep={nextStep}
         onPreviousStep={previousStep}
-        onSizeChange={(size) => resetArray(parseInt(size, 10))}
+        onSizeChange={(size)=> generateNewArray(size)}
+        generateNewArrayButton= {()=>generateNewArray()}
       />
       <div className="array-container">
         {array.map((value, idx) => (
