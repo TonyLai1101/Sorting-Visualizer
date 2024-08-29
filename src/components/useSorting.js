@@ -49,7 +49,7 @@ function sortingReducer(state, action) {
             return state;
 
         case START_SORTING:
-            return { ...state, sorting: true, paused: false };
+            return { ...state, paused: false };
 
         case PAUSE_SORTING:
             return { ...state, paused: true };
@@ -72,7 +72,6 @@ function sortingReducer(state, action) {
                 steps: action.payload.newSteps,
                 currentStepIndex: 0,
                 completed: false,
-                sorting: false,
                 paused: true,
                 sortedIndices: [],
                 stepGenerated : true
@@ -86,7 +85,6 @@ function sortingReducer(state, action) {
             
                 currentStepIndex: 0,
                 completed: false,
-                sorting: false,
                 paused: true,
                 sortedIndices: []
             };
@@ -103,7 +101,6 @@ function sortingReducer(state, action) {
                 steps: [{ array: state.array.slice(), type: 'initial' }, ...newSteps],
                 currentStepIndex: 0,
                 completed: false,
-                sorting: false,
                 paused: true,
                 sortedIndices: [],
                 stepGenerated : true,
@@ -120,7 +117,6 @@ function sortingReducer(state, action) {
 export function useSorting(initialSize = 10) {
     const [state, dispatch] = useReducer(sortingReducer, initialSize, (size) => ({
         array: [],
-        sorting: false,
         completed: false,
         algorithm: '',
         speed: 50,
@@ -190,11 +186,11 @@ export function useSorting(initialSize = 10) {
 
     useEffect(() => {
         console.log("Running useEffect for sorting steps");
-        if (!state.paused && state.sorting && state.currentStepIndex < state.steps.length - 1) {
+        if (!state.paused && state.currentStepIndex < state.steps.length - 1) {
             timeoutRef.current = setTimeout(nextStep, state.speed);
         }
         return () => clearTimeout(timeoutRef.current);
-    }, [state.paused, state.sorting, state.currentStepIndex, state.steps.length, state.speed, nextStep]);
+    }, [state.paused, state.currentStepIndex, state.steps.length, state.speed, nextStep]);
 
 
     return {

@@ -5,7 +5,6 @@ import AlgorithmSelector from './AlgorithmSelector';
 
 const Controls = ({
         stepGenerated,
-        sorting,
         paused,
         completed,
         currentStepIndex,
@@ -24,15 +23,15 @@ const Controls = ({
         
 }) => (
     <div className="controls">
-        <button onClick={() => onGenerateNewArray(10)} disabled={sorting && !paused}>Generate New Array</button>
+        <button onClick={() => onGenerateNewArray(10)} disabled={!paused}>Generate New Array</button>
 
-        <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} />
+        <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} disabled={!paused}/>
         <input
             type="range"
             min="1"
             max="100"
             onChange={(e) => onSpeedChange(e.target.value)}
-            disabled={sorting && !paused}
+            disabled={!paused}
         />
         <div id="arraySize">Change Array Size
             <input
@@ -40,7 +39,7 @@ const Controls = ({
                 min="5"
                 max="50"
                 onChange={(sizeValue) => onGenerateNewArray(sizeValue.target.value)}
-                disabled={sorting && !paused}
+                disabled={!paused}
                 defaultValue={10}
             />
         </div>
@@ -50,7 +49,6 @@ const Controls = ({
             onReset={onReset}
             onNextStep={onNextStep}
             onPreviousStep={onPreviousStep}
-            sorting={sorting}
             paused={paused}
             completed={completed}
             currentStepIndex={currentStepIndex}

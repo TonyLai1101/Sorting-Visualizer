@@ -30,14 +30,6 @@ const SortingVisualizer = () => {
     currentStep,
   } = useSorting();
 
-  const handleStartPause = () => {
-    if (paused) {
-      startSorting();
-    } else {
-      pauseSorting();
-    }
-  };
-
    useEffect(() => {
     if (!arrayGenerated) {
       generateNewArray(10);
@@ -66,14 +58,12 @@ const SortingVisualizer = () => {
       <Controls
         stepGenerated={stepGenerated}
         arrayGenerated={arrayGenerated}
-        sorting={sorting}
         paused={paused}
         completed={completed}
         currentStepIndex={currentStepIndex}
         stepCount={stepCount}
         speed={speed}
         algorithm={algorithm}
-        handleStartPause ={handleStartPause}
         onGenerateNewArray={generateNewArray}
         onStart={startSorting}
         onPause={pauseSorting}
