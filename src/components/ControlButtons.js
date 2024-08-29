@@ -3,6 +3,7 @@ import React from 'react';
 const ControlButtons = ({
     onStart,
     onReset,
+    onPause,
     onNextStep,
     onPreviousStep,
     sorting,
@@ -10,20 +11,20 @@ const ControlButtons = ({
     completed,
     currentStepIndex,
     stepCount,
-    generateNewArrayButton,
+    stepGenerated,
 }) => (
     <div className="control-buttons">
-        <button onClick={generateNewArrayButton} disabled={sorting && !paused}>Generate New Array</button>
 
-        <button onClick={onReset} disabled={sorting && !paused}>Reset</button>
+        <button onClick={onReset} disabled={sorting && !paused && !completed  || !stepGenerated }>Reset</button>
 
-        <button onClick={onStart}>
+        <button onClick={() => paused ? onStart() : onPause()} disabled={!stepGenerated || completed}>
             {paused ? 'Start' : 'Pause'}
+            
         </button>
-        <button onClick={onPreviousStep} disabled={!paused || currentStepIndex <= 0}>
+        <button onClick={onPreviousStep} disabled={!paused || currentStepIndex <= 0 || !stepGenerated}>
             Previous Step
         </button>
-        <button onClick={onNextStep} disabled={!paused || completed }>
+        <button onClick={onNextStep} disabled={!paused || completed || !stepGenerated}>
             Next Step
         </button>
         <span>{`Step ${currentStepIndex + 1} of ${stepCount}`}</span>

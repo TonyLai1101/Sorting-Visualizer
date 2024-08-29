@@ -1,0 +1,40 @@
+.algorithm-selector {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.algorithm-dropdown {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.algorithm-dropdown:hover {
+    border-color: #45a049;
+}
+
+.algorithm-dropdown:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+}
+
+.algorithm-dropdown:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    border-color: #ccc;
+}
+
+.current-algorithm {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+.current-algorithm span {
+    font-weight: bold;
+    color: #4CAF50;
+}

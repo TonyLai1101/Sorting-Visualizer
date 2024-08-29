@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo , useEffect} from 'react';
 import '../style/SortingVisualizer.css';
 import { useSorting } from './useSorting';
 import Controls from './Control';
@@ -6,24 +6,28 @@ import Controls from './Control';
 const SortingVisualizer = () => {
   const {
     array,
+    algorithm,
+    arrayGenerated,
+    stepGenerated,
+
     sorting,
     paused,
     completed,
     currentStepIndex,
     stepCount,
-    algorithm,
-    currentStep,
-    sortedIndices,
     speed,
+    sortedIndices,
     
     startSorting,
     pauseSorting,
-    resetArray,
+    generateNewArray,
     setAlgorithm,
-    setSpeed,
+    onReset,
     nextStep,
     previousStep,
-    generateNewArray,
+    setSpeed,
+    
+    currentStep,
   } = useSorting();
 
   const handleStartPause = () => {
@@ -33,6 +37,12 @@ const SortingVisualizer = () => {
       pauseSorting();
     }
   };
+
+   useEffect(() => {
+    if (!arrayGenerated) {
+      generateNewArray(10);
+    }
+  }, []);
 
   // Memoize the bar width calculation
   const barWidth = useMemo(() => Math.max(2, 100 / array.length - 1), [array.length]);
@@ -54,23 +64,28 @@ const SortingVisualizer = () => {
   return (
     <div className="sorting-visualizer">
       <Controls
+        stepGenerated={stepGenerated}
+        arrayGenerated={arrayGenerated}
         sorting={sorting}
         paused={paused}
         completed={completed}
         currentStepIndex={currentStepIndex}
         stepCount={stepCount}
-        algorithm={algorithm}
         speed={speed}
-
-        onStart={handleStartPause}
-        onReset={() => resetArray(algorithm)}
-        onAlgorithmChange={setAlgorithm}
-        onSpeedChange={(newSpeed) => setSpeed(500 - newSpeed)}
+        algorithm={algorithm}
+        handleStartPause ={handleStartPause}
+        onGenerateNewArray={generateNewArray}
+        onStart={startSorting}
+        onPause={pauseSorting}
+        onReset={onReset}
         onNextStep={nextStep}
         onPreviousStep={previousStep}
-        onSizeChange={(size)=> generateNewArray(size)}
-        generateNewArrayButton= {()=>generateNewArray()}
+        onSpeedChange={setSpeed}
+        onAlgorithmChange={setAlgorithm}
+        onSizeChagne={generateNewArray}
       />
+
+
       <div className="array-container">
         {array.map((value, idx) => (
           <div

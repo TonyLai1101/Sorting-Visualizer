@@ -11,7 +11,8 @@ const NEW_ARRAY = 'NEW_ARRAY';
 const SET_ALGORITHM = 'SET_ALGORITHM';
 const SET_SPEED = 'SET_SPEED';
 const RESET_ARRAY = "RESET_ARRAY";
-
+const NEW_STEP = 'NEW_STEP';
+const GENERATE_ARRAY = 'GENERATE_ARRAY';
 // Reducer function
 function sortingReducer(state, action) {
     switch (action.type) {
@@ -26,7 +27,8 @@ function sortingReducer(state, action) {
                     sortedIndices: step.type === 'sorted' 
                         ? [...state.sortedIndices, ...step.indices]
                         : state.sortedIndices,
-                    completed: nextIndex === state.steps.length - 1
+                    completed: nextIndex === state.steps.length - 1,
+                    
                 };
             }
             return state;
@@ -52,24 +54,36 @@ function sortingReducer(state, action) {
         case PAUSE_SORTING:
             return { ...state, paused: true };
 
-        case NEW_ARRAY:
+        case GENERATE_ARRAY:
             return {
                 ...state,
-                array: action.payload.newArray,
+                algorithm: '',
+                steps: [],
+                stepGenerated: false,
+                array: action.payload,
+
+                arrayGenerated: true
+            };
+        
+
+        case NEW_STEP:
+            return {
+                ...state,
                 steps: action.payload.newSteps,
                 currentStepIndex: 0,
                 completed: false,
                 sorting: false,
                 paused: true,
-                sortedIndices: []
+                sortedIndices: [],
+                stepGenerated : true
             };
+
         
         case RESET_ARRAY:
             return {
                 ...state,
-                array: action.payload.initialArray,
-
-                steps: action.payload.newSteps,
+                array: state.steps[0].array,
+            
                 currentStepIndex: 0,
                 completed: false,
                 sorting: false,
@@ -82,9 +96,17 @@ function sortingReducer(state, action) {
         case SET_ALGORITHM:
             console.log("Run SET ALGO Reducer playlaode:", action.payload)
 
-            return { 
-                ...state, 
+            const newSteps = algorithms[action.payload](state.array.slice());
+            return {
+                ...state,
                 algorithm: action.payload,
+                steps: [{ array: state.array.slice(), type: 'initial' }, ...newSteps],
+                currentStepIndex: 0,
+                completed: false,
+                sorting: false,
+                paused: true,
+                sortedIndices: [],
+                stepGenerated : true,
             };
 
         case SET_SPEED:
@@ -100,20 +122,27 @@ export function useSorting(initialSize = 10) {
         array: [],
         sorting: false,
         completed: false,
-        algorithm: 'bubbleSort',
+        algorithm: '',
         speed: 50,
         steps: [],
         currentStepIndex: 0,
         paused: true,
         sortedIndices: [],
+        arrayGenerated: false,
+        stepGenerated: false,
     }));
 
     const timeoutRef = useRef(null);
 
     const generateSteps = useCallback((array, algorithm) => {
         console.log("generateSteps function is called with algorithm:", algorithm);
-        const newSteps = algorithms[algorithm](array.slice());
-        return [{ array: array.slice(), type: 'initial' }, ...newSteps];
+        const Steps = algorithms[algorithm](array.slice());
+        const newSteps = [{ array: array.slice(), type: 'initial' }, ...Steps];
+        dispatch({ type: NEW_STEP, payload: {newSteps} });
+        console.log(newSteps);
+
+
+        // return [{ array: array.slice(), type: 'initial' }, ...newSteps];
     }, []);
 
 
@@ -138,34 +167,26 @@ export function useSorting(initialSize = 10) {
         clearTimeout(timeoutRef.current);
     }, []);
 
-    const generateNewArray = useCallback(() => {
-        console.log("Running generateNewArray");
-        const newArray = generateRandomArray(10);
-        const newSteps = generateSteps(newArray, state.algorithm);
-        dispatch({ type: NEW_ARRAY, payload: { newArray, newSteps } });
+      const generateNewArray = useCallback((size) => {
+            console.log("Running generateNewArray: size: ", size);
+
+            const newArray = generateRandomArray(size);
+            dispatch({ type: 'GENERATE_ARRAY', payload: newArray });
     }, []);
 
-    const resetArray = useCallback((algo) => {
-        console.log("Running resetArray:", algo);
-        if (state.steps.length > 0) {
-            const initialArray = state.steps[0].array;
-            const newSteps = generateSteps(initialArray, algo);
-            dispatch({ type: RESET_ARRAY, payload: {initialArray, newSteps } });
-        }
+    const onReset = useCallback(() => {
+        console.log("Running resetArray:");
+        
+        dispatch({ type: RESET_ARRAY })
     }, [state.steps, state.algorithm, generateSteps]);
 
 
-    const setAlgorithm = (newAlgorithm) => {
-        console.log("Setting new algorithm:", newAlgorithm);
-        dispatch({ type: SET_ALGORITHM, payload: newAlgorithm});
-        resetArray(newAlgorithm)
-    }
+    const setAlgorithm = useCallback((newAlgorithm) => {
+        dispatch({ type: 'SET_ALGORITHM', payload: newAlgorithm });
+    }, []);
 
 
 
-    useEffect(() => {
-        generateNewArray();
-    }, [generateNewArray]);
 
     useEffect(() => {
         console.log("Running useEffect for sorting steps");
@@ -187,6 +208,6 @@ export function useSorting(initialSize = 10) {
         setSpeed: (speed) => dispatch({ type: SET_SPEED, payload: speed }),
         nextStep,
         previousStep,
-        resetArray
+        onReset,
     };
 }

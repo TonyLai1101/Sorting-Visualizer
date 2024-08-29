@@ -4,22 +4,28 @@ import ControlButtons from './ControlButtons';
 import AlgorithmSelector from './AlgorithmSelector';
 
 const Controls = ({
-    onStart,
-    onReset,
-    onAlgorithmChange,
-    onSpeedChange,
-    onNextStep,
-    onPreviousStep,
-    sorting,
-    paused,
-    completed,
-    currentStepIndex,
-    stepCount,
-    algorithm,
-    onSizeChange,
-    generateNewArrayButton,
+        stepGenerated,
+        sorting,
+        paused,
+        completed,
+        currentStepIndex,
+        stepCount,
+        speed,
+        algorithm,
+
+        onGenerateNewArray,
+        onStart,
+        onPause,
+        onReset,
+        onNextStep,
+        onPreviousStep,
+        onSpeedChange,
+        onAlgorithmChange,
+        
 }) => (
     <div className="controls">
+        <button onClick={() => onGenerateNewArray(10)} disabled={sorting && !paused}>Generate New Array</button>
+
         <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} />
         <input
             type="range"
@@ -33,13 +39,14 @@ const Controls = ({
                 type="range"
                 min="5"
                 max="50"
-                onChange={(sizeValue) => onSizeChange(sizeValue.target.value)}
+                onChange={(sizeValue) => onGenerateNewArray(sizeValue.target.value)}
                 disabled={sorting && !paused}
                 defaultValue={10}
             />
         </div>
         <ControlButtons
             onStart={onStart}
+            onPause={onPause}
             onReset={onReset}
             onNextStep={onNextStep}
             onPreviousStep={onPreviousStep}
@@ -48,7 +55,7 @@ const Controls = ({
             completed={completed}
             currentStepIndex={currentStepIndex}
             stepCount={stepCount}
-            generateNewArrayButton={generateNewArrayButton}
+            stepGenerated = {stepGenerated}
         />
     </div>
 );
