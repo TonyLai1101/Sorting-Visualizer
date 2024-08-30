@@ -38,3 +38,17 @@
     font-weight: bold;
     color: #4CAF50;
 }
+
+.algorithm-dropdown.placeholder {
+    color: #999;
+}
+
+.algorithm-dropdown.placeholder option:not(:first-child) {
+    color: black;
+}
+
+.algorithm-warning {
+    color: #ff6b6b;
+    font-size: 0.9em;
+    margin-top: 5px;
+}

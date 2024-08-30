@@ -56,7 +56,6 @@ const Controls = ({
             paused={paused}
             completed={completed}
             currentStepIndex={currentStepIndex}
-            stepCount={stepCount}
             stepGenerated = {stepGenerated}
         />
     </div>

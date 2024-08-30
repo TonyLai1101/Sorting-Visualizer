@@ -10,7 +10,6 @@ const ControlButtons = ({
     paused,
     completed,
     currentStepIndex,
-    stepCount,
     stepGenerated,
 }) => (
     <div className="control-buttons">
