@@ -3,7 +3,6 @@ export function bubbleSort(arr) {
   const auxArray = arr.slice();
   const steps = [];
   let sortedIndices = new Set();
-
   for (let i = 0; i < n - 1; i++) {
     let swapped = false;
     for (let j = 0; j < n - i - 1; j++) {
@@ -26,11 +25,13 @@ export function bubbleSort(arr) {
   }
 
   // Mark any remaining unsorted elements
+  let unsorted = [];
   for (let i = 0; i < n; i++) {
     if (!sortedIndices.has(i)) {
-      steps.push({ array: auxArray.slice(), type: 'sorted', indices: [i] });
+      unsorted.push(i)
     }
   }
+  steps.push({ array: auxArray.slice(), type: 'sorted', indices: unsorted });
 
   return steps;
 }

@@ -10,12 +10,10 @@ const SortingVisualizer = () => {
     arrayGenerated,
     stepGenerated,
 
-    sorting,
     paused,
     completed,
     currentStepIndex,
     stepCount,
-    speed,
     sortedIndices,
     
     startSorting,
@@ -25,7 +23,7 @@ const SortingVisualizer = () => {
     onReset,
     nextStep,
     previousStep,
-    setSpeed,
+    setStep,
     
     currentStep,
   } = useSorting();
@@ -62,7 +60,6 @@ const SortingVisualizer = () => {
         completed={completed}
         currentStepIndex={currentStepIndex}
         stepCount={stepCount}
-        speed={speed}
         algorithm={algorithm}
         onGenerateNewArray={generateNewArray}
         onStart={startSorting}
@@ -70,9 +67,9 @@ const SortingVisualizer = () => {
         onReset={onReset}
         onNextStep={nextStep}
         onPreviousStep={previousStep}
-        onSpeedChange={setSpeed}
         onAlgorithmChange={setAlgorithm}
         onSizeChagne={generateNewArray}
+        onSliderChange={setStep}
       />
 
 

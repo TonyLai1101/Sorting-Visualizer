@@ -9,7 +9,6 @@ const Controls = ({
         completed,
         currentStepIndex,
         stepCount,
-        speed,
         algorithm,
 
         onGenerateNewArray,
@@ -18,21 +17,15 @@ const Controls = ({
         onReset,
         onNextStep,
         onPreviousStep,
-        onSpeedChange,
         onAlgorithmChange,
+        onSliderChange,
         
 }) => (
     <div className="controls">
         <button onClick={() => onGenerateNewArray(10)} disabled={!paused && !completed}>Generate New Array</button>
 
         <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} disabled={!paused}/>
-        <input
-            type="range"
-            min="1"
-            max="100"
-            onChange={(e) => onSpeedChange(e.target.value)}
-            disabled={!paused}
-        />
+       
         <div id="arraySize">Change Array Size
             <input
                 type="range"
@@ -43,6 +36,17 @@ const Controls = ({
                 defaultValue={10}
             />
         </div>
+            <div className="process-slider">
+      <input
+        type="range"
+        min="0"
+        max={stepCount - 1}
+        value={currentStepIndex}
+        onChange={(e) => onSliderChange(Number(e.target.value))}
+        disabled={!paused}
+      />
+      <span>Step: {currentStepIndex + 1} / {stepCount}</span>
+    </div>
         <ControlButtons
             onStart={onStart}
             onPause={onPause}

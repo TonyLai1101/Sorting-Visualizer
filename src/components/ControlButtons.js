@@ -27,7 +27,6 @@ const ControlButtons = ({
         <button onClick={onNextStep} disabled={!paused || completed || !stepGenerated}>
             Next Step
         </button>
-        <span>{`Step ${currentStepIndex + 1} of ${stepCount}`}</span>
     </div>
 );
 
