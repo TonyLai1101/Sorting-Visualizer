@@ -1,28 +1,35 @@
-export function bubbleSort(array) {
+export function bubbleSort(arr) {
+  const n = arr.length;
+  const auxArray = arr.slice();
   const steps = [];
-  let auxArray = array.slice();
-  let n = auxArray.length;
-  
-  for (let round = 0; round < n; round++) {
+  let sortedIndices = new Set();
+
+  for (let i = 0; i < n - 1; i++) {
     let swapped = false;
-    for (let i = 0; i < n - 1 - round; i++) {
-      steps.push({ array: auxArray.slice(), type: 'compare', indices: [i, i + 1] });
-
-      if (auxArray[i] > auxArray[i + 1]) {
-        steps.push({ array: auxArray.slice(), type: 'swap', indices: [i, i + 1] });
-
-        [auxArray[i], auxArray[i + 1]] = [auxArray[i + 1], auxArray[i]];
-        steps.push({ array: auxArray.slice(), type: 'swap', indices: [i, i + 1] });
+    for (let j = 0; j < n - i - 1; j++) {
+      steps.push({ array: auxArray.slice(), type: 'compare', indices: [j, j + 1] });
+      if (auxArray[j] > auxArray[j + 1]) {
+        [auxArray[j], auxArray[j + 1]] = [auxArray[j + 1], auxArray[j]];
+        steps.push({ array: auxArray.slice(), type: 'swap', indices: [j, j + 1] });
         swapped = true;
       }
     }
-    steps.push({ array: auxArray.slice(), type: 'sorted', indices: [n - 1 - round] }); // Mark the current last element as sorted
-    if (!swapped) break;
+    
+    // Mark the last unsorted element as sorted
+    const lastUnsortedIndex = n - i - 1;
+    if (!sortedIndices.has(lastUnsortedIndex)) {
+      steps.push({ array: auxArray.slice(), type: 'sorted', indices: [lastUnsortedIndex] });
+      sortedIndices.add(lastUnsortedIndex);
+    }
+
+    if (!swapped) break;  // If no swapping occurred, array is sorted
   }
 
-  // Mark all remaining elements as sorted (for cases where the array is already sorted or becomes sorted before the loop finishes)
+  // Mark any remaining unsorted elements
   for (let i = 0; i < n; i++) {
-    steps.push({ array: auxArray.slice(), type: 'sorted', indices: [i] });
+    if (!sortedIndices.has(i)) {
+      steps.push({ array: auxArray.slice(), type: 'sorted', indices: [i] });
+    }
   }
 
   return steps;

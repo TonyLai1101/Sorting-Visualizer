@@ -23,7 +23,7 @@ const Controls = ({
         
 }) => (
     <div className="controls">
-        <button onClick={() => onGenerateNewArray(10)} disabled={!paused}>Generate New Array</button>
+        <button onClick={() => onGenerateNewArray(10)} disabled={!paused && !completed}>Generate New Array</button>
 
         <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} disabled={!paused}/>
         <input
