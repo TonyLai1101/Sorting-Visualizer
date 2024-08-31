@@ -61,4 +61,4 @@ const Controls = ({
     </div>
 );
 
-export default Controls;
+export default React.memo(Controls);

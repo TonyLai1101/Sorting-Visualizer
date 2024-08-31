@@ -135,15 +135,14 @@ export function useSorting(initialSize = 10) {
         setStep('previous');
     }, [setStep]);
 
-    const startSorting = useCallback(() => {
+    const startSorting = () => {
         console.log("Running startSorting");
         dispatch({ type: START_SORTING });
-    }, []);
+    };
 
     const pauseSorting = useCallback(() => {
         console.log("Running pauseSorting");
         dispatch({ type: PAUSE_SORTING });
-        clearTimeout(timeoutRef.current);
     }, []);
 
       const generateNewArray = useCallback((size) => {
@@ -163,10 +162,6 @@ export function useSorting(initialSize = 10) {
     const setAlgorithm = useCallback((newAlgorithm) => {
         dispatch({ type: 'SET_ALGORITHM', payload:( newAlgorithm)  });
     }, []);
-
-
-
-
 
 
     useEffect(() => {
