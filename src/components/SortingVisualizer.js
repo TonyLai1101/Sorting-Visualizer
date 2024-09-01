@@ -7,40 +7,32 @@ const SortingVisualizer = () => {
 	const {
 		array,
 		algorithm,
-		arrayGenerated,
-		stepGenerated,
-
+		steps,
 		paused,
-		completed,
 		currentStepIndex,
-		stepCount,
 		sortedIndices,
-		
-		startSorting,
-		pauseSorting,
+		completed,
+
 		generateNewArray,
-		setAlgorithm,
-		onReset,
-		nextStep,
-		previousStep,
-		setStep,
+        setAlgorithm,
+        setStep,
+        nextStep,
+        previousStep,
+        startSorting,
+        pauseSorting,
+        onReset,
 		
-		currentStep,
 	} = useSorting();
 
-	 useEffect(() => {
-		if (!arrayGenerated) {
-			generateNewArray(10);
-		}
-	}, []);
 
 	// Memoize the bar width calculation
 	const barWidth = useMemo(() => Math.max(2, 100 / array.length - 1), [array.length]);
 	const color = barWidth > 5 ? "white" : "transparent";
-
+	
 	// Memoize the className calculation
 	const getBarClassName = (idx) => {
 		let className = 'array-bar';
+		const currentStep = steps[currentStepIndex]
 		if (sortedIndices.includes(idx)) {
 			className += ' sorted';
 		} else if (currentStep && currentStep.type === 'compare' && currentStep.indices.includes(idx)) {
@@ -52,15 +44,15 @@ const SortingVisualizer = () => {
 	};
 
 	return (
-		<div className="sorting-visualizer">
+		<div className="sorting-visualizer" >
 			<Controls
-				stepGenerated={stepGenerated}
-				arrayGenerated={arrayGenerated}
+				steps={steps}
+				stepGenerated= {steps.length > 1}
 				paused={paused}
 				completed={completed}
 				currentStepIndex={currentStepIndex}
-				stepCount={stepCount}
 				algorithm={algorithm}
+
 				onGenerateNewArray={generateNewArray}
 				onStart={startSorting}
 				onPause={pauseSorting}
@@ -68,7 +60,6 @@ const SortingVisualizer = () => {
 				onNextStep={nextStep}
 				onPreviousStep={previousStep}
 				onAlgorithmChange={setAlgorithm}
-				onSizeChagne={generateNewArray}
 				onSliderChange={setStep}
 			/>
 

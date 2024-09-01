@@ -8,7 +8,7 @@ const Controls = ({
         paused,
         completed,
         currentStepIndex,
-        stepCount,
+        steps,
         algorithm,
 
         onGenerateNewArray,
@@ -22,7 +22,7 @@ const Controls = ({
         
 }) => (
     <div className="controls">
-        <button onClick={() => onGenerateNewArray(10)} disabled={!paused && !completed}>Generate New Array</button>
+        <button  onClick={() => onGenerateNewArray(10)} disabled={!paused && !completed}>Generate New Array</button>
 
         <AlgorithmSelector algorithm={algorithm} onAlgorithmChange={onAlgorithmChange} disabled={!paused}/>
        
@@ -40,12 +40,12 @@ const Controls = ({
       <input
         type="range"
         min="0"
-        max={stepCount - 1}
+        max={steps.length - 1}
         value={currentStepIndex}
         onChange={(e) => onSliderChange(Number(e.target.value))}
         disabled={!paused}
       />
-      <span>Step: {currentStepIndex + 1} / {stepCount}</span>
+      <span>Step: {currentStepIndex + 1} / {steps.length}</span>
     </div>
         <ControlButtons
             onStart={onStart}

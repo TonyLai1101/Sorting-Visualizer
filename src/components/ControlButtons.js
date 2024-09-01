@@ -6,15 +6,15 @@ const ControlButtons = ({
     onPause,
     onNextStep,
     onPreviousStep,
-    sorting,
     paused,
     completed,
     currentStepIndex,
     stepGenerated,
 }) => (
+    
     <div className="control-buttons">
 
-        <button onClick={onReset} disabled={sorting && !paused && !completed  || !stepGenerated }>Reset</button>
+        <button onClick={onReset} disabled={!paused && !completed  || !stepGenerated }>Reset</button>
 
         <button onClick={() => paused ? onStart() : onPause()} disabled={!stepGenerated || completed}>
             {paused ? 'Start' : 'Pause'}
