@@ -16,9 +16,9 @@
     background-color: #1da4f2;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     justify-content: flex-end;
-    position: relative;
+    /* position: relative; */
     transition: background-color 0.5s ease, height 0.5s ease, width 0.5s ease;
     padding-bottom: 10px;
     font-family: sans-serif;
@@ -36,4 +36,11 @@
 .array-bar.sorted {
     background-color: green;
 }
+.array-bar-value {
+    position: absolute;
+    color: black;
+    font-size: 12px;
+}
 
+
+@media (max-width: 768px) {}

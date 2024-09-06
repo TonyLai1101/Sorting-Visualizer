@@ -61,8 +61,8 @@ const Controls = ({
         </span>
       </div>
     </div>
+    
   <div className="control-buttons">
-
     <ControlButtons
       onStart={onStart}
       onPause={onPause}

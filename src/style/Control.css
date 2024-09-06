@@ -11,10 +11,11 @@
     align-items: center;
     z-index: 1000;
 }
-.controls>* {
+
+/* Fixed gap between main elements */
+/* .controls>* {
     margin-right: 20px;
-    /* Fixed gap between main elements */
-}
+} */
 
 button {
     background-color: #29b9b6;
@@ -39,14 +40,9 @@ button:disabled {
     width: 100%;
 }
 
-.algorithm-selector {
-    background-color: #34495e;
-    color: white;
-    border: none;
-    padding: 8px;
-    border-radius: 4px;
-}
+
 .sliders-wrapper {
+    margin-right: 90px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -63,6 +59,8 @@ button:disabled {
 .slider-container label {
     margin-bottom: 5px;
 }
+
+
 
 @media (max-width: 768px) {
     .sliders-wrapper {
