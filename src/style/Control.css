@@ -1,71 +1,75 @@
 .controls {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
     position: fixed;
     top: 0;
-    width: 100%;
-    background-color: #343a40;
-    padding: 10px;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: #f8f9fa;
-    z-index: 1000;
-    font-family: sans-serif;
-}
-
-.top-bar {
-    display: flex;
-    gap: 10px;
-}
-
-.algorithmButton,
-.currentAlgorithmButton {
+    left: 0;
+    right: 0;
+    background-color: #2c3e50;
+    color: white;
     padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #495057;
-    transition: background-color 0.3s, color 0.3s;
-    color: #f8f9fa;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    z-index: 1000;
 }
-
-.algorithmButton:hover {
-    background-color: #6c757d;
-}
-
-.currentAlgorithmButton {
-    background-color: #6f42c1;
-    color: #f8f9fa;
-}
-
-input[type="range"] {
-    width: 200px;
-    margin: 0 20px;
-    accent-color: #6f42c1;
+.controls>* {
+    margin-right: 20px;
+    /* Fixed gap between main elements */
 }
 
 button {
-    padding: 10px 20px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
+    background-color: #29b9b6;
     color: white;
-    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #29b9b6;
 }
 
 button:disabled {
+    background-color: #95a5a6;
     cursor: not-allowed;
-    opacity: 0.5;
-    background-color: #6c757d;
 }
 
-span {
-    margin-left: 20px;
-    font-weight: bold;
+.slider-container input[type="range"] {
+    width: 100%;
+}
+
+.algorithm-selector {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+}
+.sliders-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+.slider-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    width: 200px;
+}
+
+
+.slider-container label {
+    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .sliders-wrapper {
+        flex-direction: column;
+    }
+
+    .slider-container {
+        width: 100%;
+    }
 }

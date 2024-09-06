@@ -43,19 +43,9 @@ function sortingReducer(state, action) {
     switch (action.type) {
         case SET_STEP: 
             let newIndex;
-            if (typeof action.payload === 'number') {
-              // Direct index set (for slider)
-              newIndex = Math.max(0, Math.min(action.payload, state.steps.length - 1));
-            } else if (action.payload === 'next') {
-              // Next step
-              newIndex = Math.min(state.currentStepIndex + 1, state.steps.length - 1);
-            } else if (action.payload === 'previous') {
-              // Previous step
-              newIndex = Math.max(0, state.currentStepIndex - 1);
-            } else {
-              return state; // Invalid payload, no change
-            }
-        
+            // Direct index set (for slider)
+            newIndex = Math.max(0, Math.min(action.payload, state.steps.length - 1));
+
             const newStep = state.steps[newIndex];
             const newSortedIndices = state.steps
               .slice(0, newIndex + 1)
@@ -87,19 +77,6 @@ function sortingReducer(state, action) {
                 sortedIndices: [],
 
             };
-        
-
-        case RESET_ARRAY:
-            return {
-                ...state,
-                array: state.steps[0].array,
-                currentStepIndex: 0,
-                paused: true,
-                sortedIndices: []
-            };
-
-
-
         case SET_ALGORITHM:
             const initialStep = state.steps[0];
             const newSteps = algorithms[action.payload](initialStep.array.slice());
@@ -138,13 +115,13 @@ export function useSorting() {
         dispatch({ type: SET_STEP, payload: step });
     };
 
-    const nextStep = useCallback(() => {
-        setStep('next');
-    }, []);
+    // const nextStep = useCallback(() => {
+    //     setStep('next');
+    // }, []);
 
-    const previousStep = useCallback(() => {
-        setStep('previous');
-    }, []);
+    // const previousStep = useCallback(() => {
+    //     setStep('previous');
+    // }, []);
 
     const startSorting = () => {
         console.log("Running startSorting");
@@ -158,7 +135,8 @@ export function useSorting() {
 
     const onReset = () => {
         console.log("Running resetArray:");
-        dispatch({ type: RESET_ARRAY })
+        // dispatch({ type: RESET_ARRAY })
+        dispatch({ type: SET_STEP, payload: 0 });
     };
 
     // This effect handles the automatic progression of sorting steps
@@ -167,7 +145,7 @@ export function useSorting() {
         const speed = 500; // Delay between steps in milliseconds
         if (!state.paused && state.currentStepIndex < state.steps.length - 1) {
             // Set a timeout to move to the next step if not paused and not at the end
-            timeoutRef.current = setTimeout(nextStep, speed);
+            timeoutRef.current = setTimeout(() => setStep(state.currentStepIndex + 1), speed);
         }
         // Cleanup function to clear the timeout when the component unmounts or dependencies change
         return () => clearTimeout(timeoutRef.current);
@@ -185,8 +163,6 @@ export function useSorting() {
         generateNewArray,
         setAlgorithm,
         setStep,
-        nextStep,
-        previousStep,
         startSorting,
         pauseSorting,
         onReset,

@@ -14,16 +14,16 @@ const ControlButtons = ({
     
     <div className="control-buttons">
 
-        <button onClick={onReset} disabled={!paused && !completed  || !stepGenerated }>Reset</button>
+        <button onClick={()=>onReset(0)} disabled={!paused && !completed  || !stepGenerated }>Reset</button>
 
         <button onClick={() => paused ? onStart() : onPause()} disabled={!stepGenerated || completed}>
             {paused ? 'Start' : 'Pause'}
             
         </button>
-        <button onClick={onPreviousStep} disabled={!paused || currentStepIndex <= 0 || !stepGenerated}>
+        <button onClick={() => onPreviousStep(currentStepIndex-1)} disabled={!paused || currentStepIndex <= 0 || !stepGenerated}>
             Previous Step
         </button>
-        <button onClick={onNextStep} disabled={!paused || completed || !stepGenerated}>
+        <button onClick={() => onNextStep(currentStepIndex+1)} disabled={!paused || completed || !stepGenerated}>
             Next Step
         </button>
     </div>
