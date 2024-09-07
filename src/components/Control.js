@@ -60,9 +60,11 @@ const Controls = ({
           Step: {currentStepIndex + 1} / {steps.length}
         </span>
       </div>
+      
     </div>
-    
+
   <div className="control-buttons">
+    
     <ControlButtons
       onStart={onStart}
       onPause={onPause}

@@ -1,0 +1,16 @@
+.pseudo-code {
+    background-color: #f4f4f4;
+    padding: 1rem;
+    border-radius: 4px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.code-line {
+    padding: 2px 0;
+}
+
+.code-line.highlighted {
+    background-color: yellow;
+}

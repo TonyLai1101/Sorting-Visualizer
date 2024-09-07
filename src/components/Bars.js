@@ -5,7 +5,6 @@ const Bars = ({ array, steps, currentStepIndex, sortedIndices }) => {
   // Memoize the bar width calculation
   const barWidth = useMemo(() => Math.max(2, 100 / array.length - 1), [array.length]);
   const color = barWidth > 5 ? "white" : "transparent";
-  
   // Memoize the className calculation
   const getBarClassName = (idx) => {
     let className = 'array-bar';

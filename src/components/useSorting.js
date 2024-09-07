@@ -32,12 +32,13 @@ const initialSize = 10;
 // The reducer ensures that the state is updated immutably,
 // always returning a new state object rather than modifying the existing one
 const initialState = {
-  array: [],
-  algorithm: '',
-  steps: [],
-  currentStepIndex: 0,
-  paused: true,
-  sortedIndices: [],
+	array: [],
+	algorithm: "",
+	steps: [],
+	currentStepIndex: 0,
+	paused: true,
+	sortedIndices: [],
+	pseudoCode: [],
 };
 function sortingReducer(state, action) {
     switch (action.type) {
@@ -68,27 +69,37 @@ function sortingReducer(state, action) {
 
         case GENERATE_ARRAY:
             return {
-                ...state,
-                array: action.payload,
-                steps: [{ array: action.payload}], //First index of steps
-                algorithm: '',
-                currentStepIndex: 0,
-                paused: true,
-                sortedIndices: [],
-
-            };
+				...state,
+				array: action.payload,
+				steps: [
+					{
+						array: action.payload,
+						explanation: {
+							__html: `<div><p>Start Sorting<p></div>`,
+						},
+					},
+				], //First index of steps
+				algorithm: "",
+				currentStepIndex: 0,
+				paused: true,
+				sortedIndices: [],
+			};
         case SET_ALGORITHM:
             const initialStep = state.steps[0];
-            const newSteps = algorithms[action.payload](initialStep.array.slice());
+            const {steps, pseudoCode } = algorithms[action.payload](initialStep.array.slice());
+            
+            console.log(pseudoCode);
+
             return {
-                ...state,
-                algorithm: action.payload,
-                steps: [initialStep, ...newSteps],
-                array: initialStep.array.slice(),
-                currentStepIndex: 0,
-                paused: true,
-                sortedIndices: [],
-            };
+				...state,
+				algorithm: action.payload,
+				steps: [initialStep, ...steps],
+				array: initialStep.array.slice(),
+				currentStepIndex: 0,
+				paused: true,
+				sortedIndices: [],
+				pseudoCode: pseudoCode,
+			};
 
         default:
             return state;
@@ -112,6 +123,7 @@ export function useSorting() {
     }
 
     const setStep = (step) => {
+
         dispatch({ type: SET_STEP, payload: step });
     };
 
