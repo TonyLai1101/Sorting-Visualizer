@@ -38,7 +38,7 @@ const Controls = ({
           id="arraySize"
           type="range"
           min="5"
-          max="50"
+          max="20"
           onChange={(e) => onGenerateNewArray(e.target.value)}
           disabled={!paused}
           defaultValue={10}

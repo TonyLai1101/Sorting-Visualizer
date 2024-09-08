@@ -58,7 +58,7 @@ const SortingVisualizer = () => {
 				onSliderChange={setStep}
 			/>
 
-			<Bars array={array} steps={steps} currentStepIndex={currentStepIndex} sortedIndices={sortedIndices} />
+			<Bars array={array} step={steps[currentStepIndex]} algorithm={algorithm} />
 			<ExplanationSection step={steps[currentStepIndex]} pseudoCode={pseudoCode}></ExplanationSection>
 		</div>
 	);

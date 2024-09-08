@@ -37,7 +37,6 @@ const initialState = {
 	steps: [],
 	currentStepIndex: 0,
 	paused: true,
-	sortedIndices: [],
 	pseudoCode: [],
 };
 function sortingReducer(state, action) {
@@ -46,18 +45,11 @@ function sortingReducer(state, action) {
             let newIndex;
             // Direct index set (for slider)
             newIndex = Math.max(0, Math.min(action.payload, state.steps.length - 1));
-
             const newStep = state.steps[newIndex];
-            const newSortedIndices = state.steps
-              .slice(0, newIndex + 1)
-              .filter(step => step.type === 'sorted')
-              .flatMap(step => step.indices);
-        
             return {
               ...state,
               currentStepIndex: newIndex,
               array: newStep.array,
-              sortedIndices: newSortedIndices,
             };
         
 
@@ -82,7 +74,6 @@ function sortingReducer(state, action) {
 				algorithm: "",
 				currentStepIndex: 0,
 				paused: true,
-				sortedIndices: [],
 			};
         case SET_ALGORITHM:
             const initialStep = state.steps[0];
@@ -97,7 +88,6 @@ function sortingReducer(state, action) {
 				array: initialStep.array.slice(),
 				currentStepIndex: 0,
 				paused: true,
-				sortedIndices: [],
 				pseudoCode: pseudoCode,
 			};
 
