@@ -17,6 +17,7 @@ export function bubbleSort(arr) {
 
 
 	for (let i = 0; i < n - 1; i++) {
+		let swapped = false;
 		steps.push({
 			array: auxArray.slice(),
 			type: "",
@@ -24,11 +25,16 @@ export function bubbleSort(arr) {
 			action: "initialize",
 			explanation: {
 				__html: `<div>Set <b>swapped</b> = <span style="color: red;">false</span></div> 
-						 <div>Then iterate from 0 to ${n - i - 1}</div>`,
+						 <div>Then iterate from 0 to ${n - i - 1}</div>
+						 <p>Current variables:</p>
+          					    <ul>
+          					      <li>i: ${i}</li>
+          					      <li>swapped: ${swapped}</li>
+          					    </ul>`,
 			},
 			sorted_indices: [...sortedIndices],
 		});
-		let swapped = false;
+		
 		for (let j = 0; j < n - i - 1; j++) {
 			const isGreater = auxArray[j] > auxArray[j + 1];
 
@@ -37,24 +43,39 @@ export function bubbleSort(arr) {
 				action: "compare",
 				compare_indices: [j, j + 1],
 				explanation: {
-					__html: `<div>Check if ${auxArray[j]} > ${auxArray[j + 1]} ?  => <b>${
-						isGreater ? "YES, need to swap" : "NO, do not need to swap"
-					}<b></div>`,
+					__html: `
+          					  <div>
+          					    <p>Check if ${auxArray[j]} > ${auxArray[j + 1]} ?  => <b>${isGreater ? "YES, need to swap" : "NO, do not need to swap"}</b></p>
+          					    <p>Current variables:</p>
+          					    <ul>
+          					      <li>i: ${i}</li>
+          					      <li>j: ${j}</li>
+          					      <li>swapped: ${swapped}</li>
+          					    </ul>
+          					  </div>
+          					`,
 				},
 				sorted_indices: [...sortedIndices],
 			});
 			if (auxArray[j] > auxArray[j + 1]) {
 				[auxArray[j], auxArray[j + 1]] = [auxArray[j + 1], auxArray[j]];
+				swapped = true;
 				steps.push({
 					array: auxArray.slice(),
 					swap_indices: [j, j + 1],
 					action: "swap",
 					explanation: {
-						__html: `<div>Swapped ${auxArray[j + 1]} and ${auxArray[j]}; <b>swapped</b> = ${swapped}.</div>`,
+						__html: `<div>Swapped ${auxArray[j + 1]} and ${auxArray[j]}; <b>swapped</b> = ${swapped}.</div>
+						<p>Current variables:</p>
+                <ul>
+                  <li>i: ${i}</li>
+                  <li>j: ${j}</li>
+                  <li>swapped: ${swapped}</li>
+                </ul>`,
 					},
 					sorted_indices: [...sortedIndices],
 				});
-				swapped = true;
+				
 			}
 		}
 
@@ -67,7 +88,13 @@ export function bubbleSort(arr) {
 				type: "sorted",
 				sorted_indices: [...sortedIndices],
 				explanation: {
-					__html: `<div>This element is sorted</div>`,
+					__html: `<div>This element is sorted</div>
+					<p>Current variables:</p>
+                <ul>
+                  <li>i: ${i}</li>
+                  <li>j: </li>
+                  <li>swapped: ${swapped}</li>
+                </ul>`,
 				},
 			});
 			

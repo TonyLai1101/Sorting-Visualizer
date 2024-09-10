@@ -15,3 +15,20 @@
 .code-line.highlighted {
     background-color: yellow;
 }
+
+.explanation{
+    text-align: left;
+}
+.explanation ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin-top: 10px;
+    }
+
+.explanation-section li {
+    margin-bottom: 5px;
+}
+
+.explanation-section p {
+    margin-bottom: 10px;
+}
