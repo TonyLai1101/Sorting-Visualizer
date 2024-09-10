@@ -32,3 +32,27 @@
 .explanation-section p {
     margin-bottom: 10px;
 }
+
+.explanation-section {
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    height: 200px;
+    /* Adjust this value as needed */
+    overflow-y: auto;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.explanation-section.closed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0;
+    border-top: none;
+    overflow: hidden;
+}
+
+/* Ensure content doesn't overflow horizontally */
+.explanation-section pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+}

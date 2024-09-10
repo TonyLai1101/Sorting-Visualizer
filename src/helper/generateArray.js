@@ -2,7 +2,7 @@ export function generateRandomArray (size) {
   console.log("Running generateRandomArray Func")
   const array = [];
   for (let i = 0; i < size; i++) {
-    array.push(randomIntFromInterval(100, 300));
+    array.push(randomIntFromInterval(5, 50));
   }
   console.log(array)
   return array;

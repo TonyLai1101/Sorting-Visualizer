@@ -4,7 +4,6 @@ import { useSorting } from './useSorting';
 import Controls from './Control';
 import Bars from './Bars'
 import ExplanationSection from './ExplanationSection';
-// import { ChevronDown, ChevronUp } from 'lucide-react';
 
 
 const SortingVisualizer = () => {
@@ -14,9 +13,9 @@ const SortingVisualizer = () => {
 		steps,
 		paused,
 		currentStepIndex,
-		sortedIndices,
 		completed,
 		pseudoCode,
+		isExplanationOpen,
 
 		generateNewArray,
         setAlgorithm,
@@ -24,15 +23,17 @@ const SortingVisualizer = () => {
         startSorting,
         pauseSorting,
         onReset,
-
 		toggleExplanation,
-		isExplanationOpen,
+
+		
 
 		explanation
 
 		
 	} = useSorting();
 	//   const toggleExplanation = () => setIsExplanationOpen(!isExplanationOpen);
+
+	
 
 
 	// This component visualizes sorting algorithms
@@ -41,25 +42,31 @@ const SortingVisualizer = () => {
 	// The Bars component renders the visual representation of the array
 	return (
 		<div className="sorting-visualizer">
-			<Controls
-				steps={steps}
-				stepGenerated={steps.length > 1}
-				paused={paused}
-				completed={completed}
-				currentStepIndex={currentStepIndex}
-				algorithm={algorithm}
-				onGenerateNewArray={generateNewArray}
-				onStart={startSorting}
-				onPause={pauseSorting}
-				onReset={setStep}
-				onNextStep={setStep}
-				onPreviousStep={setStep}
-				onAlgorithmChange={setAlgorithm}
-				onSliderChange={setStep}
-			/>
+			<div className="controls">
+				<Controls
+					steps={steps}
+					stepGenerated={steps.length > 1}
+					paused={paused}
+					completed={completed}
+					currentStepIndex={currentStepIndex}
+					algorithm={algorithm}
+					onGenerateNewArray={generateNewArray}
+					onStart={startSorting}
+					onPause={pauseSorting}
+					onReset={setStep}
+					onNextStep={setStep}
+					onPreviousStep={setStep}
+					onAlgorithmChange={setAlgorithm}
+					onSliderChange={setStep}
+					toggleExplanation={toggleExplanation}
+					isExplanationOpen={isExplanationOpen}
+				/>
+			</div>
 
-			<Bars array={array} step={steps[currentStepIndex]} algorithm={algorithm} />
-			<ExplanationSection step={steps[currentStepIndex]} pseudoCode={pseudoCode}></ExplanationSection>
+			<div className="top-section">{isExplanationOpen && <ExplanationSection step={steps[currentStepIndex]} pseudoCode={pseudoCode} />}</div>
+			<div className="bars-container">
+				<Bars array={array} step={steps[currentStepIndex]} algorithm={algorithm} />
+			</div>
 		</div>
 	);
 };

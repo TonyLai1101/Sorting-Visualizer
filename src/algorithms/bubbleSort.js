@@ -26,11 +26,7 @@ export function bubbleSort(arr) {
 			explanation: {
 				__html: `<div>Set <b>swapped</b> = <span style="color: red;">false</span></div> 
 						 <div>Then iterate from 0 to ${n - i - 1}</div>
-						 <p>Current variables:</p>
-          					    <ul>
-          					      <li>i: ${i}</li>
-          					      <li>swapped: ${swapped}</li>
-          					    </ul>`,
+						 <p>Current variables: <span class="variables">i: ${i}, j: N/A, swapped: ${swapped}</span></p>`,
 			},
 			sorted_indices: [...sortedIndices],
 		});
@@ -46,14 +42,7 @@ export function bubbleSort(arr) {
 					__html: `
           					  <div>
           					    <p>Check if ${auxArray[j]} > ${auxArray[j + 1]} ?  => <b>${isGreater ? "YES, need to swap" : "NO, do not need to swap"}</b></p>
-          					    <p>Current variables:</p>
-          					    <ul>
-          					      <li>i: ${i}</li>
-          					      <li>j: ${j}</li>
-          					      <li>swapped: ${swapped}</li>
-          					    </ul>
-          					  </div>
-          					`,
+          					    <p>Current variables: <span class="variables">i: ${i}, j: ${j}, swapped: ${swapped}</span></p>`,
 				},
 				sorted_indices: [...sortedIndices],
 			});
@@ -66,12 +55,7 @@ export function bubbleSort(arr) {
 					action: "swap",
 					explanation: {
 						__html: `<div>Swapped ${auxArray[j + 1]} and ${auxArray[j]}; <b>swapped</b> = ${swapped}.</div>
-						<p>Current variables:</p>
-                <ul>
-                  <li>i: ${i}</li>
-                  <li>j: ${j}</li>
-                  <li>swapped: ${swapped}</li>
-                </ul>`,
+						            <p>Current variables: <span class="variables">i: ${i}, j: ${j}, swapped: ${swapped}</span></p>`,
 					},
 					sorted_indices: [...sortedIndices],
 				});
@@ -89,12 +73,7 @@ export function bubbleSort(arr) {
 				sorted_indices: [...sortedIndices],
 				explanation: {
 					__html: `<div>This element is sorted</div>
-					<p>Current variables:</p>
-                <ul>
-                  <li>i: ${i}</li>
-                  <li>j: </li>
-                  <li>swapped: ${swapped}</li>
-                </ul>`,
+					            <p>Current variables: <span class="variables">i: ${i}, j: N/A, swapped: ${swapped}</span></p>`,
 				},
 			});
 			

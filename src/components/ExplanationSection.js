@@ -1,16 +1,10 @@
-import React from 'react';
+import React from "react";
 import "../style/ExplanationSection.css";
 
-const ExplanationSection = ({ isOpen, step, pseudoCode, currentAction }) => {
-  // if (!isOpen) return null;
-  let { explanation, action } =0;
-  if (step && pseudoCode) {
-		explanation = step.explanation;
-		action = step.action;
-    console.log(pseudoCode);
-  }
+const ExplanationSection = ({ step, pseudoCode }) => {
+	let { explanation, action } = step || {};
 
-  return (
+	return (
 		<div className="explanation-section">
 			<div className="explanation" dangerouslySetInnerHTML={explanation}></div>
 			{Array.isArray(pseudoCode) && pseudoCode.length > 0 && (
@@ -23,7 +17,7 @@ const ExplanationSection = ({ isOpen, step, pseudoCode, currentAction }) => {
 				</pre>
 			)}
 		</div>
-  );
+	);
 };
 
 export default ExplanationSection;

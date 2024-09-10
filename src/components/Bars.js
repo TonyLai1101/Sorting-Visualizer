@@ -46,7 +46,6 @@ const Bars = ({ array, step, algorithm }) => {
 
 	// Memoize the bar width calculation
 	const barWidth = useMemo(() => Math.max(2, 100 / array.length - 1), [array.length]);
-	const color = barWidth > 5 ? "white" : "transparent";
 
 	return (
 		<div className="array-container">
@@ -55,7 +54,7 @@ const Bars = ({ array, step, algorithm }) => {
 					key={idx}
 					className="array-bar"
 					style={{
-						height: `${value}px`,
+						height: `${value*5}px`,
 						width: `${barWidth}%`,
 						backgroundColor: getBarColor(idx, value),
 					}}

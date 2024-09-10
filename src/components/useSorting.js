@@ -9,6 +9,7 @@ const SET_ALGORITHM = 'SET_ALGORITHM';
 const RESET_ARRAY = "RESET_ARRAY";
 const SET_STEP = 'SET_STEP';
 const GENERATE_ARRAY = 'GENERATE_ARRAY';
+const setIsExplanationOpen =  "setIsExplanationOpen";
 const initialSize = 10;
 
 // Reducer function
@@ -38,6 +39,7 @@ const initialState = {
 	currentStepIndex: 0,
 	paused: true,
 	pseudoCode: [],
+	isExplanationOpen: true,
 };
 function sortingReducer(state, action) {
     switch (action.type) {
@@ -90,6 +92,11 @@ function sortingReducer(state, action) {
 				paused: true,
 				pseudoCode: pseudoCode,
 			};
+        case setIsExplanationOpen:
+            return {
+				...state,
+                isExplanationOpen: action.payload
+			};
 
         default:
             return state;
@@ -117,14 +124,6 @@ export function useSorting() {
         dispatch({ type: SET_STEP, payload: step });
     };
 
-    // const nextStep = useCallback(() => {
-    //     setStep('next');
-    // }, []);
-
-    // const previousStep = useCallback(() => {
-    //     setStep('previous');
-    // }, []);
-
     const startSorting = () => {
         console.log("Running startSorting");
         dispatch({ type: START_SORTING });
@@ -139,6 +138,10 @@ export function useSorting() {
         console.log("Running resetArray:");
         // dispatch({ type: RESET_ARRAY })
         dispatch({ type: SET_STEP, payload: 0 });
+    };
+    const toggleExplanation = () =>{
+        console.log("Running toggleExplanation:");
+        dispatch({ type: setIsExplanationOpen , payload : !state.isExplanationOpen});
     };
 
     // This effect handles the automatic progression of sorting steps
@@ -160,13 +163,14 @@ export function useSorting() {
     },[])
 
     return {
-        ...state,
-        completed: state.currentStepIndex === state.steps.length - 1,
-        generateNewArray,
-        setAlgorithm,
-        setStep,
-        startSorting,
-        pauseSorting,
-        onReset,
-    };
+		...state,
+		completed: state.currentStepIndex === state.steps.length - 1,
+		generateNewArray,
+		setAlgorithm,
+		setStep,
+		startSorting,
+		pauseSorting,
+		onReset,
+		toggleExplanation,
+	};
 }
