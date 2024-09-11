@@ -26,10 +26,6 @@ const SortingVisualizer = () => {
 		toggleExplanation,
 
 		
-
-		explanation
-
-		
 	} = useSorting();
 	//   const toggleExplanation = () => setIsExplanationOpen(!isExplanationOpen);
 
@@ -63,7 +59,10 @@ const SortingVisualizer = () => {
 				/>
 			</div>
 
-			<div className="top-section">{isExplanationOpen && <ExplanationSection step={steps[currentStepIndex]} pseudoCode={pseudoCode} />}</div>
+			<div className={`explain-section ${!isExplanationOpen ? "collapsed" : ""}`}>
+				{isExplanationOpen && <ExplanationSection step={steps[currentStepIndex]} pseudoCode={pseudoCode} />}
+			</div>
+
 			<div className="bars-container">
 				<Bars array={array} step={steps[currentStepIndex]} algorithm={algorithm} />
 			</div>

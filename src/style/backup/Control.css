@@ -1,6 +1,5 @@
 .controls {
     position: fixed;
-    margin-bottom: 20px;
     top: 0;
     left: 0;
     right: 0;
@@ -8,10 +7,15 @@
     color: white;
     padding: 10px 20px;
     display: flex;
+    /* justify-content: space-between; */
     align-items: center;
+    z-index: 1000;
 }
 
-
+/* Fixed gap between main elements */
+/* .controls>* {
+    margin-right: 20px;
+} */
 
 button {
     background-color: #29b9b6;
@@ -44,7 +48,6 @@ button:disabled {
     align-items: flex-start;
     gap: 20px;
 }
-
 .slider-container {
     display: flex;
     flex-direction: column;
