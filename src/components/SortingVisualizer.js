@@ -38,7 +38,7 @@ const SortingVisualizer = () => {
 	// The Bars component renders the visual representation of the array
 	return (
 		<div className="sorting-visualizer">
-			<div className="controls">
+			<div className="buttons-container">
 				<Controls
 					steps={steps}
 					stepGenerated={steps.length > 1}
@@ -59,7 +59,7 @@ const SortingVisualizer = () => {
 				/>
 			</div>
 
-			<div className={`explain-section ${!isExplanationOpen ? "collapsed" : ""}`}>
+			<div className={`explain-container ${!isExplanationOpen ? "collapsed" : ""}`}>
 				{isExplanationOpen && <ExplanationSection step={steps[currentStepIndex]} pseudoCode={pseudoCode} />}
 			</div>
 

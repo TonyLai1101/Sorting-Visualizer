@@ -6,7 +6,11 @@ const Bars = ({ array, step, algorithm }) => {
 	const getBarColor = (idx,value) => {
 		switch (algorithm) {
 			case "bubbleSort":
-				return getBubbleSortColor(idx,value, step);
+				return getBubbleSortColor(idx, step);
+			case "insertionSort":
+				return getInsertionSortColor(idx,step);
+			case "selectionSort":
+				return getSelectionSortColor(idx, step);
 			// case "quickSort":
 			// 	return getQuickSortColor( value, step);
 			// case "mergeSort":
@@ -16,10 +20,7 @@ const Bars = ({ array, step, algorithm }) => {
 				return "#1da4f2"; // Default blue color
 		}
 	};
-  // if (step) {
-	// 	console.log("test", step.compare_indices);
-  // }
-	const getBubbleSortColor = (idx,value, step) => {
+	const getBubbleSortColor = (idx, step) => {
 		// console.log("step:", step, "value", value, "index:", idx);
 		if (step.sorted_indices?.includes(idx)) return "green";
 		if (step.swap_indices?.includes(idx)) return "red";
@@ -27,22 +28,23 @@ const Bars = ({ array, step, algorithm }) => {
 		return "#1da4f2"; // Default blue color
 	};
 
-	// const getQuickSortColor = (index, value, step) => {
-	// 	if (step.sortedIndices?.includes(index)) return "green";
-	// 	if (index === step.pivotIndex) return "yellow";
-	// 	if (index === step.storeIndex) return "purple";
-	// 	if (step.indices?.includes(index)) return "red";
-	// 	return "blue";
-	// };
-
-	// const getMergeSortColor = (index, step) => {
-	// 	if (step.sortedIndices?.includes(index)) return "green";
-	// 	if (step.leftArray?.includes(index)) return "orange";
-	// 	if (step.rightArray?.includes(index)) return "pink";
-	// 	return "blue";
-	// };
+	const getSelectionSortColor = (idx, step) => {
+		if (step.sorted_indices?.includes(idx)) return "green"; // Sorted elements
+		if (step.current_min?.includes(idx)) return "red"; // Sorted elements
+		if (step.action === "compare" && step.indices.includes(idx)) return "orange"; // Picked up element (key)
+		if (step.action === "swap" && step.indices?.includes(idx)) return "red"; // Elements being shifted
+		if (step.action === "insert" && step.indices.includes(idx)) return "blue"; // Inserted element (key)
+		return "#1da4f2"; // Default color
+	};
 
 
+	const getInsertionSortColor = (idx, step) => {
+		if (step.sorted_indices?.includes(idx)) return "green"; // Sorted elements
+		if (step.action === "pick-up" && step.indices.includes(idx)) return "orange"; // Picked up element (key)
+		if (step.action === "shift" && step.compare_indices?.includes(idx)) return "red"; // Elements being shifted
+		if (step.action === "insert" && step.indices.includes(idx)) return "blue"; // Inserted element (key)
+		return "#1da4f2"; // Default color
+	}
 
 	// Memoize the bar width calculation
 	const barWidth = useMemo(() => Math.max(2, 100 / array.length - 1), [array.length]);

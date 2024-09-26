@@ -120,7 +120,6 @@ export function useSorting() {
     }
 
     const setStep = (step) => {
-
         dispatch({ type: SET_STEP, payload: step });
     };
 

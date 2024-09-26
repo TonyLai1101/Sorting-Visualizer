@@ -19,7 +19,7 @@ const Controls = ({
 	onAlgorithmChange,
 	onSliderChange,
 	isExplanationOpen,
-  toggleExplanation,
+   toggleExplanation,
 }) => (
 	<div className="controls">
 		<button onClick={() => onGenerateNewArray(10)} disabled={!paused && !completed}>

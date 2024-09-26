@@ -1,10 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    height: 100%;
+}
 
 .sorting-visualizer {
     display: flex;
     flex-direction: column;
-    /* max-width: 1200px; */
-    margin: 0 auto;
-    padding: 10px;
-    /* height: min-content; */
+    height: 100vh;
+    /* Full viewport height */
 }
 
+.buttons-container {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+}
+
+.explain-container {
+    height: 40vh;
+    background-color: #ffffff;
+}
+
+.explain-container.collapsed {
+    height: 40vh;    /* Collapse the explanation section */
+}
+
+.bars-container {
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+}

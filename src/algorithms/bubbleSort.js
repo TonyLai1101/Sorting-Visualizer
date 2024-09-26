@@ -20,7 +20,7 @@ export function bubbleSort(arr) {
 		let swapped = false;
 		steps.push({
 			array: auxArray.slice(),
-			type: "",
+			action: "",
 			indices: [],
 			action: "initialize",
 			explanation: {
@@ -69,7 +69,7 @@ export function bubbleSort(arr) {
 			sortedIndices.push(lastUnsortedIndex);
 			steps.push({
 				array: auxArray.slice(),
-				type: "sorted",
+				action: "sorted",
 				sorted_indices: [...sortedIndices],
 				explanation: {
 					__html: `<div>This element is sorted</div>
@@ -91,7 +91,7 @@ export function bubbleSort(arr) {
 	}
 	steps.push({
 		array: auxArray.slice(),
-		type: "sorted",
+		action: "sorted",
 		sorted_indices: [...sortedIndices],
 		explanation: {
 			__html: `<div>Done !</div>`,
