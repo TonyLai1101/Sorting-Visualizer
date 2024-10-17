@@ -3,7 +3,7 @@ import { useSorting } from './useSorting';
 import Controls from './Control';
 import Bars from './Bars'
 import ExplanationSection from './ExplanationSection';
-
+import React from 'react';
 
 const SortingVisualizer = () => {
 	const {
