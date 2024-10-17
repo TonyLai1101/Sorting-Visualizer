@@ -16,8 +16,8 @@ const AlgorithmSelector = ({ algorithm, onAlgorithmChange, disabled }) => (
 				</option>
 			)}
 			<option value="bubbleSort">Bubble Sort</option>
-			<option value="quickSort">Quick Sort</option>
-			<option value="insertionSort">Insertion Sort</option>
+			{/* <option value="quickSort">Quick Sort</option>
+			<option value="insertionSort">Insertion Sort</option> */}
 
 			<option value="selectionSort">Selection Sort</option>
 			{/*  Add more options for additional algorithms as needed */}

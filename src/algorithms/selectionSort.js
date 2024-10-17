@@ -40,7 +40,8 @@ export function selectionSort(arr) {
 				indices: [j],
 				explanation: {
 					__html: `
-						<div>Compare current min at index <b>minIndex = ${minIndex}</b> (${currentMinElement}) with element at index <b>j = ${j}</b> (${currentElement}).</div>
+						<div>Checking if element at index <b>j = ${j}</b> (${currentElement}) < current min at index <b>minIndex = ${minIndex}</b> (${currentMinElement}). 
+                        <b>${currentElement < currentMinElement ? "YES, need to update" : "NO, do not need to update"}</b></div>
 						<p>Current variables: <span class="variables">i: ${i}, j: ${j}, minIndex: ${minIndex}</span></p>`,
 				},
 				sorted_indices: [...sortedIndices],
