@@ -1,4 +1,3 @@
-import React, { useMemo , useEffect} from 'react';
 import '../style/SortingVisualizer.css';
 import { useSorting } from './useSorting';
 import Controls from './Control';
@@ -22,7 +21,6 @@ const SortingVisualizer = () => {
         setStep,
         startSorting,
         pauseSorting,
-        onReset,
 		toggleExplanation,
 
 		

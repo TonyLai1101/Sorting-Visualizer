@@ -6,7 +6,6 @@ import { generateRandomArray } from '../helper/generateArray.js';
 const START_SORTING = 'START_SORTING';
 const PAUSE_SORTING = 'PAUSE_SORTING';
 const SET_ALGORITHM = 'SET_ALGORITHM';
-const RESET_ARRAY = "RESET_ARRAY";
 const SET_STEP = 'SET_STEP';
 const GENERATE_ARRAY = 'GENERATE_ARRAY';
 const setIsExplanationOpen =  "setIsExplanationOpen";

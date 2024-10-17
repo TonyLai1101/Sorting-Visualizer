@@ -20,7 +20,6 @@ export function bubbleSort(arr) {
 		let swapped = false;
 		steps.push({
 			array: auxArray.slice(),
-			action: "",
 			indices: [],
 			action: "initialize",
 			explanation: {
@@ -83,7 +82,6 @@ export function bubbleSort(arr) {
 	}
 
 	// Mark any remaining unsorted elements
-	let unsorted = [];
 	for (let i = 0; i < n; i++) {
 		if (!sortedIndices.includes(i)) {
 			sortedIndices.push(i);
