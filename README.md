@@ -1,6 +1,6 @@
 ## Try It Out
 
-### 🚀 [Try the Sorting Visualizer now!](https://tonylai1101.github.io/Sorting-Visualizer/)
+### 🚀 [Try the Sorting Visualizer now!](https://tonylai1101.github.io/Sorting-Visualizer/) <- Click it
 
 ![Sorting Visualizer Screenshot](public/Screenshot.png)
 
